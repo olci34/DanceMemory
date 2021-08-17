@@ -19,7 +19,7 @@ class Card {
     constructor(sticker, matchID, uniq) {
         this.sticker = sticker
         this.matchID = matchID
-        this.uniq = uniq // to find and flip unmatched cards when 3rd one clicked
+        this.uniq = uniq
         this.faceUp = false
     }
 
@@ -40,7 +40,7 @@ class Card {
         flipCardInner.append(backDiv)
         flipCard.append(flipCardInner)
         cardBoard.append(flipCard)
-        flipCardInner.addEventListener('click', this.cardListener.bind(this))  // BLOG POST bind(this)
+        flipCardInner.addEventListener('click', this.cardListener.bind(this))
     }
 
     cardListener(e) {
@@ -63,7 +63,7 @@ class Card {
                         DOMCard.children[1].style.backgroundColor = 'rgba(153, 205, 50, 0.267)'
                     })
                 } 
-            } else if (this.faceUp === true) { // If clicked to a only faced up card
+            } else if (this.faceUp === true) {
                 comparedCards[0].flipFaceDown(e.currentTarget)
                 comparedCards = []
             }
@@ -84,8 +84,8 @@ class Card {
     }
 
     flipFaceUp(target) {
-        target.className = 'flip-card-inner' // to flip visually
-        this.faceUp = true // to flip programmatically
+        target.className = 'flip-card-inner'
+        this.faceUp = true
     }
 
     flipFaceDown(target) {
@@ -102,8 +102,6 @@ class Card {
         score.innerText = '0'
         const clickNumber = document.getElementById('click-number')
         clickNumber.innerText = '0'
-        const cardsNumber = document.getElementById('numberOfCards')
-        cardsNumber.value = ''
     
         for (let i = 0; i < cardNumber/2; i++) {
             const randomCard = randomCards.splice(Math.floor(Math.random() * randomCards.length),1)[0];

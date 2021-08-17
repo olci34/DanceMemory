@@ -16,7 +16,7 @@ class Player {
             body: JSON.stringify(newPlayer)
         }
         
-        fetch('http://localhost:3000/players', configPlayer)
+        fetch('https://dancememorydemo.herokuapp.com//players', configPlayer)
            .then(resp => resp.json())
            .then(player => {
                if (player.id) {
@@ -25,11 +25,14 @@ class Player {
                     gameID.value = lastGame.id
                     document.querySelector('.click-counter').append(gameID)
                     const currentPlayer = new Player(player.rank, player.name, player.latest_score)
-                    currentPlayer.appendPlayer() 
+                    currentPlayer.appendPlayer()
+                    const playerLabel = document.createElement('h3')
+                    playerLabel.innerHTML = `Player: ${currentPlayer.name}`
+                    document.getElementById('player-info').appendChild(playerLabel)
                     Card.setCards(lastGame.card_number)
-                    disableConfig(false)
+                    // disableConfig(false)
                 } else {
-                   throw new Error(player.message) /// add alert DOM
+                   throw new Error(player.message)
                 }
            }).catch(err => alert(err))
     }
@@ -46,9 +49,11 @@ class Player {
     static listTopFive() {
         const top5 = document.querySelector('.players')
         top5.innerHTML = ''
-        fetch('http://localhost:3000/players')
+        fetch('https://dancememorydemo.herokuapp.com//players')
         .then(resp => resp.json())
         .then(players => {
+            Game.appendGameForm()
+            
             let sortedPlayers = players.sort( (p1, p2) => p1.rank - p2.rank)
             let top5 = sortedPlayers.slice(0,5)
             top5.forEach(function(player) {
